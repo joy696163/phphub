@@ -1,80 +1,64 @@
 <?php
 
-class NodesController extends \BaseController {
+class NodesController extends \BaseController
+{
 
-	protected $topic;
+    protected $topic;
 
-	public function __construct(Topic $topic)
+    public function __construct(Topic $topic)
     {
-    	parent::__construct();
-    	
+        parent::__construct();
+        
         $this->beforeFilter('auth', ['only' => 'create', 'store']);
         $this->topic = $topic;
     }
 
-	public function index()
-	{
-		$nodes = Node::all();
+    public function create()
+    {
+        return View::make('nodes.create');
+    }
 
-		return View::make('nodes.index', compact('nodes'));
-	}
+    public function store()
+    {
+        $validator = Validator::make($data = Input::all(), Node::$rules);
 
-	public function create()
-	{
-		return View::make('nodes.create');
-	}
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-	public function store()
-	{
-		$validator = Validator::make($data = Input::all(), Node::$rules);
+        Node::create($data);
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
+        return Redirect::route('nodes.index');
+    }
 
-		Node::create($data);
+    public function show($id)
+    {
+        $node = Node::findOrFail($id);
+        $filter = $this->topic->present()->getTopicFilter();
+        $topics = $this->topic->getNodeTopicsWithFilter($filter, $id);
 
-		return Redirect::route('nodes.index');
-	}
+        return View::make('topics.index', compact('topics', 'node'));
+    }
 
-	public function show($id)
-	{
-		$node = Node::findOrFail($id);
-		$filter = $this->topic->present()->getTopicFilter();
-		$topics = $this->topic->getNodeTopicsWithFilter($filter, $id);
+    public function update($id)
+    {
+        $node = Node::findOrFail($id);
 
-		return View::make('topics.index', compact('topics', 'node'));
-	}
+        $validator = Validator::make($data = Input::all(), Node::$rules);
 
-	public function edit($id)
-	{
-		$node = Node::find($id);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-		return View::make('nodes.edit', compact('node'));
-	}
+        $node->update($data);
 
-	public function update($id)
-	{
-		$node = Node::findOrFail($id);
+        return Redirect::route('nodes.index');
+    }
 
-		$validator = Validator::make($data = Input::all(), Node::$rules);
+    public function destroy($id)
+    {
+        Node::destroy($id);
 
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
-
-		$node->update($data);
-
-		return Redirect::route('nodes.index');
-	}
-
-	public function destroy($id)
-	{
-		Node::destroy($id);
-
-		return Redirect::route('nodes.index');
-	}
-
+        return Redirect::route('nodes.index');
+    }
 }

@@ -7,8 +7,7 @@ class NotificationPresenter extends Presenter
 {
     public function lableUp()
     {
-        switch ($this->type)
-        {
+        switch ($this->type) {
             case 'new_reply':
             $lable = lang('Your topic have new reply:');
                 break;
@@ -35,12 +34,17 @@ class NotificationPresenter extends Presenter
                 break;
             case 'topic_mark_excellent':
                 $lable = lang('has recomended your topic:');
-            break;
+                break;
+            case 'comment_append':
+                $lable = lang('Commented topic has new update:');
+                break;
+            case 'attention_append':
+                $lable = lang('Attented topic has new update:');
+                break;
 
             default:
                 break;
         }
         return $lable;
-
     }
 }

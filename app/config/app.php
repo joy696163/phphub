@@ -153,6 +153,10 @@ return array(
         'BigName\BackupManager\Integrations\Laravel\BackupManagerServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+        'Roumen\Sitemap\SitemapServiceProvider',
+        'Phphub\Sitemap\SitemapServiceProvider',
+        'Maknz\Slack\SlackServiceProvider',
+
     ),
 
     /*
@@ -230,6 +234,7 @@ return array(
         'Purifier'          => 'Mews\Purifier\Facades\Purifier',
         'Image'             => 'Intervention\Image\Facades\Image',
         'Bugsnag'           => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+        'Slack'             => 'Maknz\Slack\Facades\Slack',
     ),
 
 );

@@ -41,7 +41,7 @@ class TopicsController extends \BaseController implements CreatorListener
     public function show($id)
     {
         $topic = Topic::findOrFail($id);
-        $replies = $topic->getRepliesWithLimit(80);
+        $replies = $topic->getRepliesWithLimit(Config::get('phphub.replies_perpage'));
         $node = $topic->node;
         $nodeTopics = $topic->getSameNodeTopics();
 
@@ -60,6 +60,22 @@ class TopicsController extends \BaseController implements CreatorListener
         $topic->body = $topic->body_original;
 
         return View::make('topics.create_edit', compact('topic', 'nodes', 'node'));
+    }
+
+    public function append($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $this->authorOrAdminPermissioinRequire($topic->user_id);
+
+        $markdown = new Markdown;
+        $content = $markdown->convertMarkdownToHtml(Input::get('content'));
+
+        $append = Append::create(['topic_id' => $topic->id, 'content' => $content]);
+
+        App::make('Phphub\Notification\Notifier')->newAppendNotify(Auth::user(), $topic, $append);
+
+        Flash::success(lang('Operation succeeded.'));
+        return Redirect::route('topics.show', $topic->id);
     }
 
     public function update($id)
@@ -154,23 +170,21 @@ class TopicsController extends \BaseController implements CreatorListener
 
     public function uploadImage()
     {
-        if ($file = Input::file('file'))
-        {
+        if ($file = Input::file('file')) {
             $allowed_extensions = ["png", "jpg", "gif"];
-            if ( $file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions) ){
+            if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
                 return ['error' => 'You may only upload png, jpg or gif.'];
             }
 
             $fileName        = $file->getClientOriginalName();
             $extension       = $file->getClientOriginalExtension() ?: 'png';
-            $folderName      = '/uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()->id;
-            $destinationPath = public_path() . $folderName;
+            $folderName      = 'uploads/images/' . date("Ym", time()) .'/'.date("d", time()) .'/'. Auth::user()->id;
+            $destinationPath = public_path() . '/' . $folderName;
             $safeName        = str_random(10).'.'.$extension;
             $file->move($destinationPath, $safeName);
 
             // If is not gif file, we will try to reduse the file size
-            if ($file->getClientOriginalExtension() != 'gif')
-            {
+            if ($file->getClientOriginalExtension() != 'gif') {
                 // open an image file
                 $img = Image::make($destinationPath . '/' . $safeName);
                 // prevent possible upsizing
@@ -185,9 +199,7 @@ class TopicsController extends \BaseController implements CreatorListener
             $data['filename'] = getUserStaticDomain() . $folderName .'/'. $safeName;
 
             SiteStatus::newImage();
-        }
-        else
-        {
+        } else {
             $data['error'] = 'Error while uploading file';
         }
         return $data;

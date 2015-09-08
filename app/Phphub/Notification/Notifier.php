@@ -3,7 +3,13 @@
 use Phphub\Forms\ReplyCreationForm;
 use Phphub\Core\CreatorListener;
 use Phphub\Notification\Mention;
-use Reply, Auth, Topic, Notification, Carbon, User;
+use Reply;
+use Auth;
+use Topic;
+use Notification;
+use Carbon;
+use User;
+use Append;
 
 class Notifier
 {
@@ -36,14 +42,35 @@ class Notifier
                     $reply);
     }
 
+    public function newAppendNotify(User $fromUser, Topic $topic, Append $append)
+    {
+        $users = $topic->replies()->with('user')->get()->lists('user');
+
+        // Notify commented user
+        Notification::batchNotify(
+                    'comment_append',
+                    $fromUser,
+                    $this->removeDuplication($users),
+                    $topic,
+                    null,
+                    $append->content);
+
+        // Notify attented users
+        Notification::batchNotify(
+                    'attention_append',
+                    $fromUser,
+                    $this->removeDuplication($topic->attentedBy),
+                    $topic,
+                    null,
+                    $append->content);
+    }
+
     // in case of a user get a lot of the same notification
     public function removeDuplication($users)
     {
         $notYetNotifyUsers = [];
-        foreach ($users as $user)
-        {
-            if (!in_array($user->id, $this->notifiedUsers))
-            {
+        foreach ($users as $user) {
+            if (!in_array($user->id, $this->notifiedUsers)) {
                 $notYetNotifyUsers[] = $user;
                 $this->notifiedUsers[] = $user->id;
             }

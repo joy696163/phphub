@@ -11,15 +11,13 @@
 |
 */
 
-App::before(function($request)
-{
+App::before(function ($request) {
 
 });
 
 
-App::after(function($request, $response)
-{
-	//
+App::after(function ($request, $response) {
+    //
 });
 
 /*
@@ -33,25 +31,25 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
-	if (Auth::guest())
-	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('login-required');
-		}
-	}
+Route::filter('auth', function () {
+    if (Auth::guest()) {
+        if (Request::ajax())
+        {
+            return Response::make('Unauthorized', 401);
+        }
+        else
+        {
+            $url = Request::isMethod('get') ? URL::current() : URL::previous();
+            Session::put('url.intended', $url);
+
+            return Redirect::to('login-required');
+        }
+    }
 });
 
 
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+Route::filter('auth.basic', function () {
+    return Auth::basic();
 });
 
 /*
@@ -65,9 +63,10 @@ Route::filter('auth.basic', function()
 |
 */
 
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
+Route::filter('guest', function () {
+    if (Auth::check()) {
+        return Redirect::to('/');
+    }
 });
 
 /*
@@ -81,43 +80,35 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
-	if (Session::token() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+Route::filter('csrf', function () {
+    if (Session::token() != Input::get('_token')) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });
 
-Route::filter('manage_topics', function()
-{
-    if (Auth::guest())
-    {
+Route::filter('manage_topics', function () {
+    if (Auth::guest()) {
         return Redirect::guest('login-required');
-    }
-    elseif ( ! Entrust::can('manage_topics') ) // Checks the current user
-    {
+    } elseif (! Entrust::can('manage_topics')) {
+        // Checks the current user
+
         return Redirect::route('admin-required');
     }
 });
 
-Route::filter('manage_users', function()
-{
-    if (Auth::guest())
-    {
+Route::filter('manage_users', function () {
+    if (Auth::guest()) {
         return Redirect::guest('login-required');
-    }
-    elseif ( ! Entrust::can('manage_users') ) // Checks the current user
-    {
+    } elseif (! Entrust::can('manage_users')) {
+        // Checks the current user
+
         return Redirect::route('admin-required');
     }
 });
 
-Route::filter('check_banned_user', function()
-{
-	// Check Banned User
-    if (Auth::check() && !Route::is('user-banned') && Auth::user()->is_banned)
-    {
+Route::filter('check_banned_user', function () {
+    // Check Banned User
+    if (Auth::check() && !Route::is('user-banned') && Auth::user()->is_banned) {
         return Redirect::route('user-banned');
     }
 });

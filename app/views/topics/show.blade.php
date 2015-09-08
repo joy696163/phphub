@@ -26,11 +26,11 @@
 
       <div class="votes">
 
-        <a data-method="post" href="javascript:void(0);" data-url="{{ route('topics.upvote', $topic->id) }}" title="{{ lang('Up Vote') }}" id="up-vote" class="vote {{ $currentUser && $topic->votes()->ByWhom(Auth::user()->id)->WithType('upvote')->count() ? 'active' :''; }}">
+        <a data-method="post" href="javascript:void(0);" data-url="{{ route('topics.upvote', $topic->id) }}" title="{{ lang('Up Vote') }}" id="up-vote" class="vote {{ $currentUser && $topic->votes()->ByWhom(Auth::id())->WithType('upvote')->count() ? 'active' :''; }}">
             <li class="fa fa-chevron-up"></li> {{ $topic->vote_count }}
         </a>
          &nbsp;
-        <a data-method="post" href="javascript:void(0);" data-url="{{ route('topics.downvote', $topic->id) }}" title="{{ lang('Down Vote') }}" id="down-vote" class="vote {{ $currentUser && $topic->votes()->ByWhom(Auth::user()->id)->WithType('downvote')->count() ? 'active' :''; }}">
+        <a data-method="post" href="javascript:void(0);" data-url="{{ route('topics.downvote', $topic->id) }}" title="{{ lang('Down Vote') }}" id="down-vote" class="vote {{ $currentUser && $topic->votes()->ByWhom(Auth::id())->WithType('downvote')->count() ? 'active' :''; }}">
             <li class="fa fa-chevron-down"></li>
         </a>
       </div>
@@ -44,6 +44,18 @@
 
       @include('topics.partials.ribbon')
     </div>
+
+    @foreach ($topic->appends as $index => $append)
+
+        <div class="appends">
+            <span class="meta">{{ lang('Append') }} {{ $index }} &nbsp;·&nbsp; <abbr title="{{ $append->created_at }}" class="timeago">{{ $append->created_at }}</abbr></span>
+            <div class="sep5"></div>
+            <div class="markdown-reply append-content">
+                {{ $append->content }}
+            </div>
+        </div>
+
+    @endforeach
 
     @include('topics.partials.topic_operate')
   </div>

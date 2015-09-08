@@ -22,9 +22,7 @@
 
             @if ($topic->order > 0 && !Input::get('filter') && Route::currentRouteName() != 'home' )
                 <span class="label label-warning">{{ lang('Stick') }}</span>
-            @endif
-
-            @if ($topic->is_excellent && !Input::get('filter') && Route::currentRouteName() != 'home' )
+            @elseif ($topic->is_excellent && !Input::get('filter') && Route::currentRouteName() != 'home' )
                 <span class="label label-success">{{ lang('Recommended') }}</span>
             @endif
 
@@ -73,6 +71,3 @@
 @else
    <div class="empty-block">{{ lang('Dont have any data Yet') }}~~</div>
 @endif
-
-
-

@@ -2,7 +2,11 @@
 
 use Phphub\Forms\TopicCreationForm;
 use Phphub\Core\CreatorListener;
-use Topic, Auth, Carbon, Markdown;
+use Phphub\Core\Robot;
+use Topic;
+use Auth;
+use Carbon;
+use Markdown;
 
 class TopicCreator
 {
@@ -15,7 +19,7 @@ class TopicCreator
 
     public function create(CreatorListener $observer, $data)
     {
-        $data['user_id'] = Auth::user()->id;
+        $data['user_id'] = Auth::id();
         $data['created_at'] = Carbon::now()->toDateTimeString();
         $data['updated_at'] = Carbon::now()->toDateTimeString();
 
@@ -28,12 +32,13 @@ class TopicCreator
         $this->form->validate($data);
 
         $topic = Topic::create($data);
-        if ( ! $topic)
-        {
+        if (! $topic) {
             return $observer->creatorFailed($topic->getErrors());
         }
 
         Auth::user()->increment('topic_count', 1);
+
+        Robot::notify($data['body_original'], 'Topic', $topic, Auth::user());
 
         return $observer->creatorSucceed($topic);
     }

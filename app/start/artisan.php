@@ -19,3 +19,9 @@ Artisan::add(new ReplyMarkdownCommand);
 
 // Backing up database
 Artisan::add(new DatabaseBackupCommand);
+Artisan::add(new OpcacheClearCommand);
+
+
+Artisan::add(new CacheAvatarsCommand);
+
+Artisan::resolve('InstallCommand');

@@ -2,9 +2,17 @@
 
 use Phphub\Forms\ReplyCreationForm;
 use Phphub\Core\CreatorListener;
+use Phphub\Core\Robot;
 use Phphub\Notification\Mention;
 use Phphub\Notification\Notifier;
-use Reply, Auth, Topic, Notification, Carbon, App, Markdown;
+use Reply;
+use Auth;
+use Topic;
+use Notification;
+use Carbon;
+use App;
+use Markdown;
+use Slack;
 
 class ReplyCreator
 {
@@ -19,7 +27,7 @@ class ReplyCreator
 
     public function create(CreatorListener $observer, $data)
     {
-        $data['user_id'] = Auth::user()->id;
+        $data['user_id'] = Auth::id();
         $data['body'] = $this->mentionParser->parse($data['body']);
 
         $markdown = new Markdown;
@@ -30,14 +38,13 @@ class ReplyCreator
         $this->form->validate($data);
 
         $reply = Reply::create($data);
-        if ( ! $reply)
-        {
+        if (! $reply) {
             return $observer->creatorFailed($reply->getErrors());
         }
 
         // Add the reply user
         $topic = Topic::find($data['topic_id']);
-        $topic->last_reply_user_id = Auth::user()->id;
+        $topic->last_reply_user_id = Auth::id();
         $topic->reply_count++;
         $topic->updated_at = Carbon::now()->toDateTimeString();
         $topic->save();
@@ -45,6 +52,8 @@ class ReplyCreator
         Auth::user()->increment('reply_count', 1);
 
         App::make('Phphub\Notification\Notifier')->newReplyNotify(Auth::user(), $this->mentionParser, $topic, $reply);
+
+        Robot::notify($data['body_original'], 'Reply', $topic, Auth::user());
 
         return $observer->creatorSucceed($reply);
     }
