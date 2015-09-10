@@ -16,17 +16,17 @@ class PagesController extends \BaseController
      */
     public function home()
     {
-        if (Auth::check())
-        {
+        //if (Auth::check())
+        //{
             $topics = $this->topic->getTopicsWithFilter('excellent');
             $nodes  = Node::allLevelUp();
 
             return View::make('pages.home', compact('topics', 'nodes'));
-        }
-        else
-        {
+        //}
+        //else
+        //{
             return "<h1>Not Found. Resolve Domain Error.</h1>";
-        }
+        //}
 
     }
 

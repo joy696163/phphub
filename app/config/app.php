@@ -26,7 +26,8 @@ return array(
     |
     */
 
-    'url' => getenv('url'),
+    //'url' => getenv('url'),
+    'url' => 'http://homestead.app/',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +158,8 @@ return array(
         'Phphub\Sitemap\SitemapServiceProvider',
         'Maknz\Slack\SlackServiceProvider',
 
+        'Barryvdh\Debugbar\ServiceProvider',
+
     ),
 
     /*
@@ -235,6 +238,8 @@ return array(
         'Image'             => 'Intervention\Image\Facades\Image',
         'Bugsnag'           => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
         'Slack'             => 'Maknz\Slack\Facades\Slack',
+
+        'Debugbar'          => 'Barryvdh\Debugbar\Facade',
     ),
 
 );
