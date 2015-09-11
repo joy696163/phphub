@@ -12,15 +12,19 @@ return [
     'DB_PASSWORD' => 'secret',
 
     // Github oauth
-    'client_id'     => 'eefd4111fbcb0e1d0fb9',
-    'client_secret' => '3dce7078f20bc10a1f6bef559b81787648f1b372',
+//    'client_id'     => 'eefd4111fbcb0e1d0fb9',
+//    'client_secret' => '3dce7078f20bc10a1f6bef559b81787648f1b372',
 
     // Github Card
-    'github_card_client_id'     => 'eefd4111fbcb0e1d0fb9',
-    'github_card_client_secret' => '3dce7078f20bc10a1f6bef559b81787648f1b372',
+//    'github_card_client_id'     => 'eefd4111fbcb0e1d0fb9',
+//    'github_card_client_secret' => '3dce7078f20bc10a1f6bef559b81787648f1b372',
+
+    //add by huangye
+    'github_card_client_id'     => '702878c6bc6267aaef17',
+    'github_card_client_secret' => '44a7dafd53b3e42bc9deaa353378376a5e3d3ba3',
 
     // App config
-    'url'           => 'http://localhost:8000/',
+    'url'           => 'http://homestead.app/',
     // 'timezone'      => 'Asia/Shanghai',
     // 'locale'        => 'zh-CN',
     // 'url_static'    => 'https://dn-phphub.qbox.me/',
