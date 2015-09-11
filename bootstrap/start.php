@@ -28,7 +28,7 @@ $env = $app->detectEnvironment(array(
 
 	'local' => array('homestead'),
     'office_pc' => array('A01101404060-PC'),
-    'office_mac' => array('bogon'),
+    'office_mac' => array('bogon'), //or A01101302009.local
 
 ));
 
