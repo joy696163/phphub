@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Tip
+ *
+ * @property integer $id 
+ * @property string $body 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @method static \Illuminate\Database\Query\Builder|\Tip whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Tip whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\Tip whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Tip whereUpdatedAt($value)
+ */
 class Tip extends \Eloquent
 {
     const CACHE_KEY = 'site_tips';

@@ -1,5 +1,25 @@
 <?php
 
+/**
+ * SiteStatus
+ *
+ * @property integer $id 
+ * @property string $day 
+ * @property integer $register_count 
+ * @property integer $topic_count 
+ * @property integer $reply_count 
+ * @property integer $image_count 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereRegisterCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereTopicCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereReplyCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereImageCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\SiteStatus whereUpdatedAt($value)
+ */
 class SiteStatus extends \Eloquent
 {
     public static function newUser()

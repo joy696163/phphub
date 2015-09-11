@@ -2,6 +2,36 @@
 
 use Laracasts\Presenter\PresentableTrait;
 
+/**
+ * Notification
+ *
+ * @property integer $id 
+ * @property integer $from_user_id 
+ * @property integer $user_id 
+ * @property integer $topic_id 
+ * @property integer $reply_id 
+ * @property string $body 
+ * @property string $type 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \User $user 
+ * @property-read \Topic $topic 
+ * @property-read \User $fromUser 
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereFromUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereTopicId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereReplyId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Notification whereUpdatedAt($value)
+ * @method static \Notification recent()
+ * @method static \Notification fromWhom($from_user_id)
+ * @method static \Notification toWhom($user_id)
+ * @method static \Notification withType($type)
+ * @method static \Notification atTopic($topic_id)
+ */
 class Notification extends \Eloquent
 {
     use PresentableTrait;

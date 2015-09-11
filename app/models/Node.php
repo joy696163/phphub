@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * Node
+ *
+ * @property integer $id 
+ * @property string $name 
+ * @property string $slug 
+ * @property integer $parent_node 
+ * @property string $description 
+ * @property integer $topic_count 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Topic')->getTopicsWithFilter($filter[] $topics 
+ * @method static \Illuminate\Database\Query\Builder|\Node whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereParentNode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereTopicCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Node whereUpdatedAt($value)
+ */
 class Node extends \Eloquent
 {
     const CACHE_KEY     = 'site_nodes';

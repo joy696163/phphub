@@ -3,6 +3,61 @@
 use Laracasts\Presenter\PresentableTrait;
 use Naux\AutoCorrect;
 
+/**
+ * Topic
+ *
+ * @property integer $id 
+ * @property string $title 
+ * @property string $body 
+ * @property integer $user_id 
+ * @property integer $node_id 
+ * @property boolean $is_excellent 
+ * @property boolean $is_wiki 
+ * @property boolean $is_blocked 
+ * @property integer $reply_count 
+ * @property integer $view_count 
+ * @property integer $favorite_count 
+ * @property integer $vote_count 
+ * @property integer $last_reply_user_id 
+ * @property \Carbon\Carbon $deleted_at 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property integer $order 
+ * @property string $body_original 
+ * @property string $excerpt 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Vote[] $votes 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\User[] $favoritedBy 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\User[] $attentedBy 
+ * @property-read \Node $node 
+ * @property-read \User $user 
+ * @property-read \User $lastReplyUser 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Reply[] $replies 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Append[] $appends 
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereNodeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereIsExcellent($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereIsWiki($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereIsBlocked($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereReplyCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereViewCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereFavoriteCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereVoteCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereLastReplyUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereBodyOriginal($value)
+ * @method static \Illuminate\Database\Query\Builder|\Topic whereExcerpt($value)
+ * @method static \Topic whose($user_id)
+ * @method static \Topic recent()
+ * @method static \Topic pinAndRecentReply()
+ * @method static \Topic recentReply()
+ * @method static \Topic excellent()
+ */
 class Topic extends \Eloquent
 {
     // manually maintian
