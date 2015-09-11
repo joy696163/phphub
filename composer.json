@@ -25,14 +25,16 @@
 		"roumen/sitemap": "2.4.*",
 		"naux/auto-correct": "~1.0",
 		"maknz/slack": "~1.7",
-		"barryvdh/laravel-debugbar": "~1.8"
+		"barryvdh/laravel-debugbar": "~1.8",
+		"barryvdh/laravel-ide-helper": "~1.11"
 	},
 	"require-dev": {
 		"way/generators": "~2.0",
 		"codeception/codeception": "~2.0",
 		"mockery/mockery": "dev-master",
 		"laracasts/testdummy": "~1.0",
-		"fzaninotto/faker": "1.4.*"
+		"fzaninotto/faker": "1.4.*",
+		"doctrine/dbal": "~2.3"
 	},
 	"repositories": [
 		{

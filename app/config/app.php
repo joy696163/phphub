@@ -159,6 +159,7 @@ return array(
         'Maknz\Slack\SlackServiceProvider',
 
         'Barryvdh\Debugbar\ServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
     ),
 
